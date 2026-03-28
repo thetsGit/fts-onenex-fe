@@ -1,6 +1,7 @@
 import type { TErrorData, TResponse } from "@/types/api";
 import type { Flight } from "@/types/entities";
-import { APP_API_URL } from "@/constants";
+
+import { API_URL } from "@/constants";
 
 export const getFlights = () => {
   type Response = TResponse<Flight[]>;
@@ -10,7 +11,7 @@ export const getFlights = () => {
   const request = async () => {
     abortController = new AbortController();
 
-    const rawResponse = await fetch(`${APP_API_URL}/flights`, {
+    const rawResponse = await fetch(`${API_URL}/flights`, {
       method: "GET",
       signal: abortController.signal,
     });
