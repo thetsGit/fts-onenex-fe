@@ -15,6 +15,7 @@
     "format": "oxfmt src/"
   },
   "dependencies": {
+    "@vueuse/core": "^14.2.1",
     "vue": "^3.5.30",
     "vue-router": "^5.0.3"
   },
@@ -38,6 +39,7 @@
     "vue-tsc": "^3.2.5"
   },
   "engines": {
-    "node": "^20.19.0 || >=22.12.0"
+    "node": ">=24",
+    "pnpm": ">=10"
   }
 }
