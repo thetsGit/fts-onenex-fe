@@ -1,11 +1,12 @@
 <script setup lang="ts">
 import { TooltipProvider, Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
+import type { LucideIcon } from "lucide-vue-next";
 
 type Props = {
   label: string;
   value?: number | null;
   unit: string;
-  icon: any;
+  icon: LucideIcon;
   min?: number;
   max?: number;
 };
