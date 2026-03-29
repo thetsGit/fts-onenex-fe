@@ -40,7 +40,7 @@ const manualFlightsSync = async () => {
           </div>
           <div>
             <h1 class="text-lg font-semibold tracking-tight">
-              Tele<span class="text-amber-500 ml-0.5">Flit</span>
+              Tele<span class="text-amber-500 ml-0.5">Flight</span>
             </h1>
             <p class="text-xs text-muted-foreground">24/7 Real-time flight monitoring</p>
           </div>
