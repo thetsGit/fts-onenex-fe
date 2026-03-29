@@ -26,6 +26,7 @@ const getValueColor = (value: Props["value"]) => {
   const extremeLow = props.min + range * 0.1;
   const extremeHigh = props.max - range * 0.1;
 
+  // Highlight the value if it is extreme
   if (value < extremeLow || value > extremeHigh) return "text-amber-600 dark:text-amber-400";
 
   return "text-foreground";

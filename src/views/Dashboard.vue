@@ -9,6 +9,7 @@ import { useRequest } from "@/composables/general";
 import { Skeleton } from "@/components/ui/skeleton";
 
 import FlightCard from "@/components/blocks/FlightCard.vue";
+import { toast } from "vue-sonner";
 
 const {
   data: flights,
@@ -19,6 +20,11 @@ const {
 } = useRequest(getFlights);
 
 onMounted(fetchFlights);
+
+const manualFlightsSync = async () => {
+  await fetchFlights(null);
+  toast.success("Flights synced successfully.");
+};
 </script>
 
 <template>
@@ -33,9 +39,9 @@ onMounted(fetchFlights);
           </div>
           <div>
             <h1 class="text-lg font-semibold tracking-tight">
-              Tele<span class="text-amber-500 ml-1">Flit</span>
+              Tele<span class="text-amber-500 ml-0.5">Flit</span>
             </h1>
-            <p class="text-xs text-muted-foreground">24/7 Real-time monitoring</p>
+            <p class="text-xs text-muted-foreground">24/7 Real-time flight monitoring</p>
           </div>
         </div>
         <div class="flex items-center gap-4">
@@ -45,7 +51,7 @@ onMounted(fetchFlights);
           <button
             class="flex size-8 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
             :class="{ 'animate-spin': syncingFlights }"
-            @click="fetchFlights"
+            @click="manualFlightsSync"
             :disabled="syncingFlights"
           >
             <RefreshCw class="size-4" />
