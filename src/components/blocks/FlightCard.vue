@@ -66,7 +66,7 @@ const status = computed(
     <Separator />
 
     <CardContent class="pt-4">
-      <div class="grid grid-cols-2 gap-2">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
         <MetricDataItem
           label="Altitude"
           :value="telemetry?.data?.altitude"
@@ -99,7 +99,7 @@ const status = computed(
           :min="0"
           :max="200000"
         />
-        <div class="col-span-2">
+        <div class="md:col-span-2">
           <MetricDataItem
             label="Temperature"
             :value="telemetry?.data?.temperature"
