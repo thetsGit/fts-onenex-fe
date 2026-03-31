@@ -1,0 +1,42 @@
+name: "Prepare environment"
+description: "Prepare ENV values."
+
+inputs:
+  vars:
+    description: Variables - JSON
+    default: ""
+
+runs:
+  using: "composite"
+  steps:
+    - name: Prepare .env file (variables)
+      if: ${{ inputs.vars != '' }}
+      shell: bash
+      env:
+        VARS_JSON: ${{ inputs.vars }}
+      run: |
+        # Extract all environment variables from VARS_JSON safely
+        # Handle HTML values and special characters properly including single quotes
+        if [[ -n "$VARS_JSON" ]]; then
+          # Validate JSON format first
+          if echo "$VARS_JSON" | jq . > /dev/null 2>&1; then
+            # Create a temporary file to process variables safely
+            temp_file=$(mktemp)
+
+            # Use jq to extract all key-value pairs and write them safely
+            echo "$VARS_JSON" | jq -r 'to_entries[] | select(.value != null and .value != "") | [.key, .value] | @tsv' | while IFS=$'\t' read -r key value; do
+              # First convert \r\n and \n to actual newlines, then escape quotes and backslashes
+              escaped_value=$(printf '%s\n' "$value" | sed 's/\\r\\n/\n/g; s/\\n/\n/g' | sed 's/\\/\\\\/g; s/"/\\"/g')
+              echo "${key}=\"${escaped_value}\"" >> "$temp_file"
+            done
+
+            # Move the temporary file to .env
+            if [[ -f "$temp_file" ]]; then
+              mv "$temp_file" .env
+            fi
+          else
+            echo "Error: VARS_JSON is not valid JSON format" >&2
+            echo "VARS_JSON content: $VARS_JSON" >&2
+            exit 1
+          fi
+        fi
